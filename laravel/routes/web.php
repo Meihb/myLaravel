@@ -53,8 +53,47 @@ Route::get("redirect", function () {
 
 
 Route::get("/test/index", "TestController@index");
+
 Route::get("users/{user}", function (App\User $user) {
     return $user->email;
 });
+
+//MIDDLEWARE
+Route::get("th", function () {
+    return 1;
+})->middleware('throttle:1,1');
+
+Route::middleware("check_token:2")->get("middle/{id}", function ($id) {
+    return $id;
+});
+
+
+//CSRF
+Route::get("form_without_csrf_token", function () {
+    return '<form method="post" action="/hello_from_form"><button type="submit">提交</button></form>';
+});
+Route::get("form_with_csrf_token", function () {
+    return '<form method="post" action="/hello_from_form">' . csrf_field() . '<button type="submit">提交</button></form>';
+});
+
+Route::post("hello_from_form", function () {
+    return "hello form";
+});
+
+Route::get('task/{id}/delete', function ($id) {
+    return '<form method="post" action="' . route('task.delete', [$id]) . '">
+                <input type="hidden" name="_method" value="DELETE"> 
+                <button type="submit">删除任务</button>
+            </form>';
+});
+
+Route::delete('task/{id}', function ($id) {
+    return 'Delete Task ' . $id;
+})->name('task.delete');
+
+//Controller
+Route::get("user/{id}", "UserController@show");
+
+
 
 
