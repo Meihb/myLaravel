@@ -139,4 +139,14 @@ Route::get("url1", function () {
     echo url()->previous();
 });
 
+//session 需要通过composer 安装predis/predis
+//cli composer require predis/predis
+Route::get("setSession", function (Request $request) {
+    print_r(session()->all());
+    $request->session()->setId(1);
+});
 
+Route::get("getSession", function (Request $request) {
+    return response()->jsonp($request->input('callback'),session()->all());
+//    print_r(session()->all());
+});
