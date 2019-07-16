@@ -20,3 +20,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post("/bar1", function () {
     return "this comes from api post";
 });
+
+Route::post("file/upload", function (Request $request) {
+    if ($request->hasFile("photo") && $request->file("photo")->isValid()) {
+        $photo = $request->file("photo");
+        $extension = $photo->extension();
+        $store_result = $photo->storeAs("photo", "test.jpg");
+        $out_put = ["extension" => $extension, "store_result" => $store_result];
+        print_r($out_put);
+    }
+    exit("no input file");
+});

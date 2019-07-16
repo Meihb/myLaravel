@@ -12,7 +12,7 @@
 */
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome', ["website" => "hello world"]);
@@ -94,6 +94,49 @@ Route::delete('task/{id}', function ($id) {
 //Controller
 Route::get("user/{id}", "UserController@show");
 
+Route::any("user/store/{id}", "UserController@store");
 
+//http request
+//Route::post("file/upload", function (Request $request) {
+//    if ($request->hasFile("photo") && $request->file("photo")->isValid()) {
+//        $photo = $request->file("photo");
+//        $extension = $photo->extension();
+//        $store_result = $photo->storeAs("photo", "test.jpg");
+//        $out_put = ["extension" => $extension, "store_result" => $store_result];
+//        print_r($out_put);
+//    }
+//    exit("no input file");
+//});
+
+
+//http response
+Route::get("cookie/response", function (Request $request) {
+    return response()
+        ->json(['name' => 'Abigail', 'state' => 'CA'])
+        ->withCallback($request->input('callback'));
+    return response()
+        ->jsonp($request->input('callback'), ['name' => 'Abigail', 'state' => 'CA']);
+    return response("Hello World", 200)->header("content-Type", "text/plain")->cookie("111name", "value", 90);
+});
+
+//redirector instance of Response
+Route::get("download", function () {//文件下载
+    return response()->download(storage_path('app/photo/test.jpg'), '测试图片.jpg');
+});
+
+//Route::get("streamDownload", function () {//流式下载
+//    return response()->streamDownload(
+//        function () {
+//            echo GitHub::api('repo')->contents()->readme('laravel', 'laravel')['contents'];
+//        },'laravel-readme.md'
+//    );
+//});
+
+
+//URL
+Route::get("url1", function () {
+    echo url()->current();
+    echo url()->previous();
+});
 
 
