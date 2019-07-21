@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -17,15 +18,16 @@ class UserController extends Controller
     public function store(Request $request)
     {
         print_r($request->all());
-        var_dump($request->input("d"));
-        $d = json_decode($request->input("d"), true);
-        var_dump($d);
-
         if ($request->filled(["a", "b"])) {
             echo "ok";
         } else {
             echo "no";
         }
 
+    }
+
+    public function index()
+    {
+        $users = DB::select("select * from `users` where id = ?",[1]);
     }
 }

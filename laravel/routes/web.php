@@ -152,4 +152,8 @@ Route::get("getSession", function (Request $request) {
 //    print_r(session()->all());
 });
 
+//validateRequests
 Route::get("post/create", "PostController@create");
+
+//直接访问会csrf报错
+Route::post("post", "PostController@store");
