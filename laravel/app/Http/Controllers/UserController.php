@@ -28,6 +28,17 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = DB::select("select * from `users` where id = ?",[1]);
+        $users = DB::select("select * from `users` where id = ?", [1]);
+//        print_r($users);
+        /*
+        DB::beginTransaction();
+        DB::update("UPDATE `users`  SET updated_at = now() where id = 1");
+        DB::commit();//commit 之后就关闭了事务
+        DB::update("UPDATE `users` set name='mhb' where id=1");
+        */
+        $result = DB::table('users')->get(['name', 'id']);
+        var_dump($result);
+        var_dump( $result instanceof \Iterator );
+
     }
 }
