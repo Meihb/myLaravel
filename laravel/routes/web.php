@@ -56,7 +56,7 @@ Route::get("/test/index", "TestController@index");
 
 Route::get("users/{user}", function (App\User $user) {
     return $user->email;
-});
+})->where(['user'=>'[0-9]+']);
 
 //MIDDLEWARE
 Route::get("th", function () {
@@ -156,4 +156,11 @@ Route::get("getSession", function (Request $request) {
 //    print_r(session()->all());
 });
 
+//validateRequests
 Route::get("post/create", "PostController@create");
+
+//直接访问会csrf报错
+Route::post("post", "PostController@store");
+
+//DB
+Route::get('users/db','UserController@index');

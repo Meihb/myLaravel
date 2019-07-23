@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -17,15 +18,27 @@ class UserController extends Controller
     public function store(Request $request)
     {
         print_r($request->all());
-        var_dump($request->input("d"));
-        $d = json_decode($request->input("d"), true);
-        var_dump($d);
-
         if ($request->filled(["a", "b"])) {
             echo "ok";
         } else {
             echo "no";
         }
+
+    }
+
+    public function index()
+    {
+        $users = DB::select("select * from `users` where id = ?", [1]);
+//        print_r($users);
+        /*
+        DB::beginTransaction();
+        DB::update("UPDATE `users`  SET updated_at = now() where id = 1");
+        DB::commit();//commit 之后就关闭了事务
+        DB::update("UPDATE `users` set name='mhb' where id=1");
+        */
+        $result = DB::table('users')->get(['name', 'id']);
+        var_dump($result);
+        var_dump( $result instanceof \Iterator );
 
     }
 }
