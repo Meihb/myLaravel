@@ -139,12 +139,16 @@ Route::get("url1", function () {
     echo url()->previous();
 });
 
+const SESSION_NAME = "HAHAHA";
 //session 需要通过composer 安装predis/predis
 //cli composer require predis/predis
 Route::get("setSession", function (Request $request) {
     session(["key" => "value"]);
     session()->setId(1);
     session()->put("key11", "value11");
+    $arr[SESSION_NAME] = "1";
+    $arr['11'] = 2;
+    print_r($arr);
 });
 
 Route::get("getSession", function (Request $request) {
