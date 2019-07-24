@@ -56,7 +56,7 @@ Route::get("/test/index", "TestController@index");
 
 Route::get("users/{user}", function (App\User $user) {
     return $user->email;
-})->where(['user'=>'[0-9]+']);
+})->where(['user' => '[0-9]+']);
 
 //MIDDLEWARE
 Route::get("th", function () {
@@ -163,4 +163,12 @@ Route::get("post/create", "PostController@create");
 Route::post("post", "PostController@store");
 
 //DB
-Route::get('users/db','UserController@index');
+Route::get('users/db', 'UserController@index');
+
+//myredis
+Route::get('redis/test', function () {
+    phpinfo();
+//    $redis = new Predis\();
+//    $redis->connect("127.0.0.1",6379);
+//    echo $redis->ping();
+});

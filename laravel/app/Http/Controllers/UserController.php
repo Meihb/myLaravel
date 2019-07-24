@@ -36,9 +36,8 @@ class UserController extends Controller
         DB::commit();//commit 之后就关闭了事务
         DB::update("UPDATE `users` set name='mhb' where id=1");
         */
-        $result = DB::table('users')->get(['name', 'id']);
+        $result = DB::table('users')->get(['name', 'id'])->where("id",1);
         var_dump($result);
-        var_dump( $result instanceof \Iterator );
 
     }
 }
